@@ -67,10 +67,10 @@ def update_user(user_id):
 @app.route('/api/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT * FROM pessoas.pessoa WHERE id = %s", (user_id,))
     user = cursor.fetchone()
     if user:
-        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        cursor.execute("DELETE FROM pessoas.pessoa WHERE id = %s", (user_id,))
         db.commit()
         cursor.close()
         return jsonify({'message': 'Usuário removido'})
