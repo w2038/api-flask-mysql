@@ -37,7 +37,7 @@ def create_user():
     nome = request.json['nome']
     email = request.json['email']
     cursor = db.cursor()
-    cursor.execute("INSERT INTO users (nome, email) VALUES (%s, %s)", (nome, email))
+    cursor.execute("INSERT INTO pessoas.pessoa (nome, email) VALUES (%s, %s)", (nome, email))
     db.commit()
     user_id = cursor.lastrowid
     cursor.close()
@@ -49,14 +49,14 @@ def update_user(user_id):
     nome = request.json.get('nome')
     email = request.json.get('email')
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT * FROM pessoas.pessoa WHERE id = %s", (user_id,))
     user = cursor.fetchone()
     if user:
         if nome:
             user['nome'] = nome
         if email:
             user['email'] = email
-        cursor.execute("UPDATE users SET nome = %s, email = %s WHERE id = %s", (user['nome'], user['email'], user_id))
+        cursor.execute("UPDATE pessoas.pessoa SET nome = %s, email = %s WHERE id = %s", (user['nome'], user['email'], user_id))
         db.commit()
         cursor.close()
         return jsonify(user)
